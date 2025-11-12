@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GLOBALS RENOV - Rénovations et Peintures Professionnelles</title>
+<meta name="description" content="Globals Renov - rénovations et peintures professionnelles">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+:root{
+  --accent:#1e90ff;
+  --accent-light:#e6f2ff;
+  --bg:#ffffff;
+  --muted:#555;
+  --radius:12px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color:#222;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);line-height:1.5}
+header{background:var(--accent);color:white;padding:18px 20px;position:sticky;top:0;z-index:100;transition:opacity .3s}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+nav{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700;font-size:1.2rem}
+.navlinks{display:flex;gap:14px;align-items:center}
+.navlinks a{color:white;text-decoration:none;padding:8px 10px;border-radius:8px}
+.navlinks a:hover{background:rgba(255,255,255,0.15)}
+.navlinks .social-link{display:flex;align-items:center;gap:6px}
+.navlinks .social-link i{font-size:1.2rem}
+
+/* HERO: immagine proporzionata senza tagli */
+.hero{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:30px 0}
+.hero h1{font-size:2rem;margin:0 0 10px}
+.hero p{color:var(--muted)}
+.hero img{width:auto; max-width:250px; height:auto; border-radius:var(--radius);}
+
+/* generali */
+section{padding:40px 0}
+h2{margin-top:0;color:var(--accent)}
+.card{background:var(--accent-light);padding:18px;border-radius:var(--radius);box-shadow:0 4px 16px rgba(0,0,0,0.05)}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.gallery-item{position:relative;cursor:pointer;border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;}
+.gallery-item img{width:100%;height:180px;object-fit:cover;display:block;transition:transform .3s}
+.gallery-item:hover img{transform:scale(1.05)}
+.gallery-item .caption{position:static;background:rgba(30,144,255,0.9);color:white;text-align:center;padding:8px;font-size:.95rem;border-bottom-left-radius:var(--radius);border-bottom-right-radius:var(--radius);}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .2s;z-index:200;padding:20px;}
+.lightbox.open{visibility:visible;opacity:1}
+.lightbox-content{max-width:90%; max-height:90%; position:relative; text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+.lightbox-content img{width:auto; height:auto; max-width:640px; max-height:70vh; border-radius:12px; object-fit:contain; display:block; margin:0 auto;}
+.lb-caption{color:white; margin-top:12px; font-size:1.6rem; font-weight:800; text-shadow:2px 2px 10px rgba(0,0,0,0.8); padding:8px 16px; border-radius:12px; background:rgba(0,0,0,0.35); text-align:center; display:inline-block;}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);font-size:2rem;color:white;background:rgba(0,0,0,0.3);border:none;padding:10px;cursor:pointer;border-radius:50%;z-index:201}
+#prev{left:12px;}
+#next{right:12px;}
+.lb-close{position:absolute;top:12px;right:12px;font-size:2rem;color:white;background:rgba(0,0,0,0.3);border:none;padding:6px 10px;cursor:pointer;border-radius:8px;z-index:201}
+
+/* recensioni */
+.review-form{background:var(--accent-light);padding:18px;border-radius:var(--radius);margin-top:20px}
+.review-form input,.review-form textarea{width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #ccc}
+.stars span{font-size:1.5rem;cursor:pointer;color:#ccc}
+.stars .active{color:gold}
+.review-card{background:var(--accent-light);padding:18px;border-radius:var(--radius);margin-top:12px;box-shadow:0 4px 16px rgba(0,0,0,0.05);position:relative}
+.delete-icon{position:absolute;top:8px;right:10px;background:none;border:none;color:#ff4444;font-size:1.1rem;cursor:pointer}
+
+/* contatti */
+.contact-grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+.contact-card p{margin:6px 0;display:flex;align-items:center;gap:8px}
+.email-box{display:flex;align-items:center;gap:8px}
+.copy-btn{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:6px 10px;border-radius:8px;cursor:pointer}
+.copy-feedback{font-size:0.9rem;color:var(--muted);margin-left:8px}
+
+/* footer */
+footer{padding:18px 0;background:var(--accent);color:white;text-align:center}
+footer .social-section{margin-top:12px}
+footer .social-section a{color:white;margin-right:10px;font-size:1.5rem}
+footer .social-section a:hover{color:#e6f2ff}
+
+/* responsive */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .navlinks{display:none}
+  .mobile-menu{display:block}
+  .lightbox img{max-width:90%;max-height:50vh;}
+  .lb-caption{font-size:1.2rem;}
+}
+.mobile-menu{display:none}
+.btn{display:inline-block;padding:8px 14px;border-radius:10px;background:var(--accent);color:white;text-decoration:none;cursor:pointer}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="container">
+    <nav>
+      <div class="brand">GLOBALS RENOV</div>
+      <div class="navlinks" id="navlinks">
+        <a href="#home">Accueil</a>
+        <a href="#about">À propos</a>
+        <a href="#services">Services</a>
+        <a href="#gallery">Galerie</a>
+        <a href="#reviews">Avis</a>
+        <a href="#contact">Contact</a>
+        <a href="#social" class="social-link"><i class="fab fa-facebook"></i><i class="fab fa-tiktok"></i> Réseaux</a>
+      </div>
+      <div class="mobile-menu">
+        <button class="btn" id="hamb">Menu</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="home" class="container hero">
+    <div>
+      <h1>Bonjour, nous sommes <span id="owner-name">GLOBALS RENOV</span></h1>
+      <p>Nous sommes une équipe de professionnels dans le secteur de la rénovation et de la peinture. Avec des années d'expérience, nous transformons chaque espace de nos clients en lieux élégants et fonctionnels.</p>
+      <a class="btn" href="#gallery">Découvrez nos réalisations</a>
+    </div>
+    <div>
+      <img src="screen.jpg" alt="Travail de rénovation">
+    </div>
+  </section>
+
+  <section id="about" class="container">
+    <div class="card">
+      <h2>À propos</h2>
+      <p>Vous pouvez voir ici certaines de nos réalisations « Avant » et « Après ». Des couleurs aux finitions, nous prenons soin de chaque détail. Contactez-nous pour un devis et suivez nos réseaux pour découvrir d’autres transformations.</p>
+    </div>
+  </section>
+
+  <section id="owner" class="container">
+    <div class="card">
+      <h2>Housine Khaya</h2>
+      <p>Housine Khaya est le fondateur et propriétaire de GLOBALS RENOV. Avec plus de 10 ans d'expérience en France (Paris, Lyon, Marseille), il a travaillé sur des appartements, villas et bureaux. Sa passion pour la précision guide chaque projet de l'entreprise.</p>
+    </div>
+  </section>
+
+  <section id="services" class="container">
+    <h2>Services</h2>
+    <div class="services">
+      <div class="card"><h3>Peinture intérieure</h3><p>Murs, plafonds et finitions avec des matériaux de qualité.</p></div>
+      <div class="card"><h3>Façades extérieures</h3><p>Nettoyage, enduit et peinture pour des extérieurs durables.</p></div>
+      <div class="card"><h3>Expert en couleurs et matériaux</h3><p>Nous aidons à choisir les couleurs et matériaux adaptés à chaque espace.</p></div>
+      <div class="card"><h3>Précision et Détail</h3><p>Nous prenons soin de chaque détail, respectons les délais et garantissons des résultats impeccables.</p></div>
+    </div>
+  </section>
+
+  <section id="gallery" class="container">
+    <h2>Galerie des travaux</h2>
+    <div class="gallery-grid" id="gallery-grid">
+      <figure class="gallery-item"><img src="Screenshot1.jpg" alt="Travail 1"><div class="caption">Avant</div></figure>
+      <figure class="gallery-item"><img src="Screenshot_2.jpg" alt="Travail 2"><div class="caption">Après</div></figure>
+      <figure class="gallery-item"><img src="Screenshot_3.jpg" alt="Travail 3"><div class="caption">Avant</div></figure>
+      <figure class="gallery-item"><img src="Screenshot_4.jpg" alt="Travail 4"><div class="caption">Après</div></figure>
+      <figure class="gallery-item"><img src="Screenshot5.jpg" alt="Travail 5"><div class="caption">Avant</div></figure>
+      <figure class="gallery-item"><img src="Screenshot_6.jpg" alt="Travail 6"><div class="caption">Après</div></figure>
+      <figure class="gallery-item"><img src="Screenshot7.jpg" alt="Travail 7"><div class="caption">Avant</div></figure>
+      <figure class="gallery-item"><img src="Screenshot_8.jpg" alt="Travail 8"><div class="caption">Après</div></figure>
+    </div>
+
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <button id="prev" class="lb-arrow" aria-label="Image précédente">&#10094;</button>
+      <div class="lightbox-content" id="lb-inner" role="dialog" aria-modal="true"></div>
+      <button id="next" class="lb-arrow" aria-label="Image suivante">&#10095;</button>
+      <button id="lb-close" class="lb-close" aria-label="Fermer">&times;</button>
+      <div class="lb-caption" id="lb-caption" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="reviews" class="container">
+    <h2>Avis des clients</h2>
+    <form class="review-form" id="reviewForm">
+      <input type="text" id="name" placeholder="Votre nom" required>
+      <textarea id="comment" rows="3" placeholder="Écrivez votre avis..." required></textarea>
+      <div class="stars" id="stars">
+        <span data-star="1">★</span>
+        <span data-star="2">★</span>
+        <span data-star="3">★</span>
+        <span data-star="4">★</span>
+        <span data-star="5">★</span>
+      </div>
+      <button type="submit" class="btn" style="margin-top:10px;">Envoyer l'avis</button>
+    </form>
+    <div id="reviewsList"></div>
+  </section>
+
+  <section id="contact" class="container">
+    <h2>Contact</h2>
+    <div class="contact-grid">
+      <div class="card contact-card">
+        <h3>Nous contacter</h3>
+        <p><i class="fas fa-phone"></i> <strong>Téléphone :</strong> +33 650118285 <a href="tel:+33650118285" style="margin-left:6px"><i class="fas fa-phone"></i> Appeler</a></p>
+        <p class="email-box"><i class="fas fa-envelope"></i> <strong>Email :</strong> <span id="emailText" style="margin-left:6px;user-select:text;">khayadem525@gmail.com</span> <button id="copyEmailBtn" class="copy-btn" title="Copier email" style="margin-left:8px;"><i class="fas fa-copy"></i> Copier</button> <span id="copyFeedback" class="copy-feedback" aria-live="polite"></span></p>
+        <p><i class="fas fa-map-marker-alt"></i> <strong>Adresse :</strong> 7 Rue d'Epinal, 54000 Nancy, France</p>
+      </div>
+
+      <div class="card">
+        <h3>Carte</h3>
+        <iframe src="https://maps.google.com/maps?q=Nancy&t=&z=13&ie=UTF8&iwloc=&output=embed" width="100%" height="220" style="border:0;border-radius:10px"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section id="social" class="container">
+    <h2>Retrouvez-nous sur :</h2>
+    <p>
+      <a href="#" target="_blank"><i class="fab fa-facebook"></i> Facebook</a> |
+      <a href="https://www.tiktok.com/@globals.renov?_r=1&_t=ZN-91Jl7crbxxa" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+    </p>
+  </section>
+</main>
+
+<footer>
+  <div>© <span id="year"></span> GLOBALS RENOV — Rénovations Professionnelles</div>
+</footer>
+
+<script>
+// Year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// LIGHTBOX
+const imgs = document.querySelectorAll('.gallery-item img');
+const lb = document.getElementById('lightbox');
+const lbInner = document.getElementById('lb-inner');
+const lbClose = document.getElementById('lb-close');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const lbCaption = document.getElementById('lb-caption');
+let currentIndex = 0;
+function openLightbox(index){ currentIndex = index; updateLightbox(); lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); document.getElementById('header').style.opacity='0'; }
+function updateLightbox(){ lbInner.innerHTML=`<img src="${imgs[currentIndex].src}" alt="${imgs[currentIndex].alt}">`; const fig = imgs[currentIndex].closest('figure'); const captionText = fig ? (fig.querySelector('.caption') ? fig.querySelector('.caption').textContent : '') : ''; lbCaption.textContent = captionText || ''; }
+function showPrev(){ currentIndex=(currentIndex-1+imgs.length)%imgs.length; updateLightbox(); }
+function showNext(){ currentIndex=(currentIndex+1)%imgs.length; updateLightbox(); }
+imgs.forEach((img,i)=>img.addEventListener('click',()=>openLightbox(i)));
+prevBtn.addEventListener('click',showPrev);
+nextBtn.addEventListener('click',showNext);
+lbClose.addEventListener('click',()=>{ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); document.getElementById('header').style.opacity='1'; });
+lb.addEventListener('click',(e)=>{ if(e.target===lb){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); document.getElementById('header').style.opacity='1'; }});
+document.addEventListener('keydown',(e)=>{ if(!lb.classList.contains('open')) return; if(e.key==='ArrowLeft') showPrev(); if(e.key==='ArrowRight') showNext(); if(e.key==='Escape'){ lb.classList.remove('open'); document.getElementById('header').style.opacity='1'; } });
+
+// MENU MOBILE
+const hamb = document.getElementById('hamb');
+hamb && hamb.addEventListener('click',()=>{ const nav=document.getElementById('navlinks'); nav.style.display=nav.style.display==='flex'?'none':'flex'; nav.style.flexDirection='column'; nav.style.position='absolute'; nav.style.right='20px'; nav.style.top='60px'; nav.style.background='white'; nav.style.padding='10px'; nav.style.borderRadius='8px'; });
+
+// RECENSIONI
+const form = document.getElementById('reviewForm');
+const list = document.getElementById('reviewsList');
+const stars = document.querySelectorAll('#stars span');
+let selectedStars=0;
+stars.forEach(star=>{ star.addEventListener('click',()=>{ selectedStars=parseInt(star.dataset.star,10); stars.forEach(s=>s.classList.toggle('active',parseInt(s.dataset.star,10)<=selectedStars)); }); });
+function loadReviews(){ const reviews=JSON.parse(localStorage.getItem('reviews')||'[]'); list.innerHTML=''; reviews.forEach((r,idx)=>{ const div=document.createElement('div'); div.className='review-card'; div.innerHTML=`<button class="delete-icon" data-idx="${idx}" title="Supprimer"><i class="fas fa-trash"></i></button><p>${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</p><p>${escapeHtml(r.comment)}</p><strong>- ${escapeHtml(r.name)}</strong>`; list.appendChild(div); }); }
+list.addEventListener('click',(e)=>{ const btn=e.target.closest('.delete-icon'); if(!btn) return; const idx=parseInt(btn.dataset.idx,10); if(confirm('Voulez-vous vraiment supprimer ce commentaire ?')){ const reviews=JSON.parse(localStorage.getItem('reviews')||'[]'); reviews.splice(idx,1); localStorage.setItem('reviews',JSON.stringify(reviews)); loadReviews(); }});
+form.addEventListener('submit',(e)=>{ e.preventDefault(); const name=document.getElementById('name').value.trim(); const comment=document.getElementById('comment').value.trim(); if(!name||!comment||!selectedStars){ alert('Remplissez tous les champs et choisissez une note.'); return; } const reviews=JSON.parse(localStorage.getItem('reviews')||'[]'); reviews.push({name,comment,stars:selectedStars}); localStorage.setItem('reviews',JSON.stringify(reviews)); form.reset(); selectedStars=0; stars.forEach(s=>s.classList.remove('active')); loadReviews(); });
+function escapeHtml(str){ return str.replace(/[&<>"']/g,(m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+loadReviews();
+
+// COPIA EMAIL
+const copyBtn=document.getElementById('copyEmailBtn');
+const emailText=document.getElementById('emailText');
+const feedback=document.getElementById('copyFeedback');
+copyBtn.addEventListener('click',async()=>{ const email=emailText.textContent.trim(); try{ await navigator.clipboard.writeText(email); feedback.textContent='Copié !'; setTimeout(()=>feedback.textContent='',2000); }catch(err){ feedback.textContent='Copie manuelle : sélectionnez et copiez'; setTimeout(()=>feedback.textContent='',3000); }});
+</script>
+
+</body>
+</html>
